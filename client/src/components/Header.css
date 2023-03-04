@@ -1,0 +1,23 @@
+.navbar{
+  width : 100%;
+  padding : 1em 2em;
+
+  display : flex;
+  align-items : center;
+  justify-content : space-between;
+}
+
+.navbar__title {
+  font-family : "Tilt Prism", cursive;
+}
+
+.navbar__addTable {
+  width: 36px;
+  height: 36px;
+  display : flex;
+  justify-content : center;
+  align-items : center;
+  border-radius: 50%;
+  font-size : 1.5rem;
+  padding : .2em;
+}
