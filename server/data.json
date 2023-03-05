@@ -1,0 +1,20 @@
+[
+  {
+    "title": "test3",
+    "name": "testname3",
+    "description": "testdesc3",
+    "participants": [
+      "testname3"
+    ],
+    "id": 1
+  },
+  {
+    "title": "test3",
+    "name": "testname3",
+    "description": "testdesc3",
+    "participants": [
+      "testname3"
+    ],
+    "id": 2
+  }
+]
