@@ -12,9 +12,22 @@
         "what": "testwhat1",
         "who_paid": "testname1",
         "amount": 10,
-        "for": ["testname1", "testname2"]
+        "for": [
+          "testname1",
+          "testname2"
+        ]
       }
     ],
     "id": 1
+  },
+  {
+    "title": "test3",
+    "name": "testname3",
+    "description": "testdesc3",
+    "participants": [
+      "testname3"
+    ],
+    "expenses": [],
+    "id": 2
   }
 ]
