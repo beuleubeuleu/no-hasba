@@ -17,18 +17,18 @@
           "testname2"
         ],
         "id": 1
+      },
+      {
+        "what": "testwhat2",
+        "who_paid": "testname2",
+        "amount": 20,
+        "for": [
+          "testname1",
+          "testname2"
+        ],
+        "id": 2
       }
     ],
     "id": 1
-  },
-  {
-    "title": "test3",
-    "name": "testname3",
-    "description": "testdesc3",
-    "participants": [
-      "testname3"
-    ],
-    "expenses": [],
-    "id": 2
   }
 ]
