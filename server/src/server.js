@@ -17,3 +17,5 @@ app.use("/group", getExpensesRouter);
 app.listen(port, () => {
   console.log(`port ${ port } lets goooooo!!!`)
 })
+
+module.exports = app
