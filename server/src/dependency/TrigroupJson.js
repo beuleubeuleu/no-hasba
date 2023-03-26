@@ -1,5 +1,5 @@
 const fs                = require("fs/promises");
-const InterfaceTrigroup = require("../../class/InterfaceTrigroup");
+const InterfaceTrigroup = require("../class/InterfaceTrigroup");
 
 class TrigroupJson extends InterfaceTrigroup {
 
