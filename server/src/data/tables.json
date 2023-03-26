@@ -12,7 +12,7 @@
         "what": "testwhat1",
         "who_paid": "testname1",
         "amount": 10,
-        "for": [
+        "for_": [
           "testname1",
           "testname2"
         ],
@@ -22,7 +22,7 @@
         "what": "testwhat2",
         "who_paid": "testname2",
         "amount": 20,
-        "for": [
+        "for_": [
           "testname1",
           "testname2"
         ],
@@ -30,5 +30,36 @@
       }
     ],
     "id": 1
+  },
+  {
+    "title": "test2",
+    "name": "testname2",
+    "description": "testdesc2",
+    "participants": [
+      "testname2"
+    ],
+    "expenses": [
+      {
+        "what": "dinner",
+        "who_paid": "testname2",
+        "amount": "20",
+        "for_": [
+          "testname2",
+          "testname3"
+        ],
+        "id": 1
+      },
+      {
+        "what": "breakfast",
+        "who_paid": "testname2",
+        "amount": "27",
+        "for_": [
+          "testname2",
+          "testname4"
+        ],
+        "id": 2
+      }
+    ],
+    "id": 2
   }
 ]
