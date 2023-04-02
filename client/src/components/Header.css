@@ -12,12 +12,13 @@
 }
 
 .navbar__addTable {
-  width: 36px;
+  border-radius: .2em;
+  min-width: 36px;
   height: 36px;
   display : flex;
   justify-content : center;
   align-items : center;
-  border-radius: 50%;
   font-size : 1.5rem;
   padding : .2em;
+  font-family : inherit;
 }
