@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css"
 
 const Header = () => {
+  const [width, setWidth] =useState<number>(0)
 
-  let addTable = window.innerWidth > 450? "Add Trigroup": "+"
+  const updateWidth = () => {
+    const width = window.innerWidth
+    setWidth(width)
+  }
+
+  useEffect(() => {
+    return () => {
+      updateWidth()
+      window.addEventListener("resize", updateWidth)
+    };
+  }, []);
+
+
+  let addTable = width > 450? "Add Trigroup": "+"
 
   return (
       <div className={ "navbar" }>

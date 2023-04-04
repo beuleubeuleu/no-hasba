@@ -1,0 +1,12 @@
+.trigroups--container {
+  max-height: calc(100% - 80px);
+  padding : 2em;
+  list-style-type: none;
+
+  overflow-x: scroll;
+
+  display : flex;
+  flex-direction: column;
+  align-items : center;
+  gap: 1em;
+}
