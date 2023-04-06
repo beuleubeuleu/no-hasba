@@ -1,16 +1,16 @@
 import React                                   from "react";
 import Header                                  from "./components/Header"
-import GroupList                               from "./pages/GroupList/GroupList";
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import TrigroupContextProvider                 from "./context/TrigroupContext";
-import GroupDetail                             from "./pages/GroupDetail/GroupDetail";
+import GroupDetail from "./pages/GroupDetail/GroupDetail";
+import Home        from "./pages/Home/Home";
 
 const App = () => {
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <GroupList/>
+      element: <Home/>
     },
     {
       path: "/group/:id",

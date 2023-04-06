@@ -1,0 +1,131 @@
+.home__container {
+  margin        : 2em;
+  padding       : 1em 2em;
+  max-width     : 1196px;
+  background    : #ECEFF4;
+  border-radius : .2em;
+}
+
+.home__title {
+  margin: 1em 1em 2em 1em;
+  font-size : clamp(1rem,3vw,2rem);
+}
+
+input[type="text"]{
+  color: #4C566A;
+}
+
+input[type="submit"]{
+  width : auto;
+  color: #ECEFF4;
+  background : #81A1C1;
+  border-radius: .2em;
+  transition         : 0.2s ease all;
+}
+input[type="submit"]:hover {
+  background : #5E81AC;
+}
+input[type="submit"]:active {
+  background : #D8DEE9;
+  color: #5E81AC;
+}
+
+
+/* form starting stylings ------------------------------- */
+.home__form--group {
+  position      : relative;
+  margin-bottom : 2em;
+}
+
+input {
+  padding       : 10px 10px 10px 5px;
+  display       : block;
+  width         : min(450px, 100%);
+  border        : none;
+  border-bottom : 1px solid #757575;
+}
+
+input:focus { outline : none; }
+
+/* LABEL ======================================= */
+label {
+  color              : #999;
+  font-weight        : normal;
+  position           : absolute;
+  pointer-events     : none;
+  left               : 5px;
+  top                : 10px;
+  transition         : 0.2s ease all;
+  -moz-transition    : 0.2s ease all;
+  -webkit-transition : 0.2s ease all;
+}
+
+/* active state */
+input:focus ~ label, input:valid ~ label {
+  top       : -1.5rem;
+  font-size : 1rem;
+  font-weight : 700;
+  color     : #5E81AC;
+}
+
+/* BOTTOM BARS ================================= */
+.home__form--bar { position : relative; display : block; width : min(450px, 100%); }
+
+.home__form--bar:before, .home__form--bar:after {
+  content            : '';
+  height             : 2px;
+  width              : 0;
+  bottom             : 1px;
+  position           : absolute;
+  background         : #5264AE;
+  transition         : 0.2s ease all;
+  -moz-transition    : 0.2s ease all;
+  -webkit-transition : 0.2s ease all;
+}
+
+.home__form--bar:before {
+  left : 50%;
+}
+
+.home__form--bar:after {
+  right : 50%;
+}
+
+/* active state */
+input:focus ~ .home__form--bar:before, input:focus ~ .home__form--bar:after {
+  width : 50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.home__form--highlight {
+  position       : absolute;
+  height         : 60%;
+  width          : 100px;
+  top            : 25%;
+  left           : 0;
+  pointer-events : none;
+  opacity        : 0.5;
+}
+
+/* active state */
+input:focus ~ .home__form--highlight {
+  -webkit-animation : inputHighlighter 0.3s ease;
+  -moz-animation    : inputHighlighter 0.3s ease;
+  animation         : inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+  from { background : #5264AE; }
+  to { width : 0; background : transparent;  }
+}
+
+@-moz-keyframes inputHighlighter {
+  from { background : #5264AE; }
+  to { width : 0; background : transparent; }
+}
+
+@keyframes inputHighlighter {
+  from { background : #5264AE; }
+  to { width : 0; background : transparent; }
+}

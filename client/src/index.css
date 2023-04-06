@@ -44,13 +44,15 @@ button {
   color            : #5E81AC;
   cursor           : pointer;
   transition       : all 0.25s;
-  font-weight      : 400;
+  font-weight      : 700;
+  padding : .2em;
+  border-radius: .2em;
 }
 
-button:hover {
+button:hover{
   background-color : #D8DEE9;
 }
 
-button:active {
+button:active{
   background : #4C566A;
 }
