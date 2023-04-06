@@ -1,27 +1,22 @@
-import React, { useEffect, useState } from "react";
-import Header                         from "./components/Header"
-import GroupList                      from "./components/GroupList";
-import { getGroups }                  from "./api/groups";
+import React     from "react";
+import Header    from "./components/Header"
+import GroupList from "./pages/GroupList/GroupList";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 const App = () => {
-  const [groups, setGroups] = useState([])
 
-  const getAllGroups = async() => {
-    const groups = await getGroups()
-    setGroups(groups)
-  }
-
-  useEffect(() => {
-    return () => {
-      getAllGroups()
-    };
-  }, []);
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <GroupList/>
+    }
+  ]);
 
 
   return (
       <div>
         <Header/>
-        <GroupList groups={groups}/>
+        <RouterProvider router={router}/>
       </div>
   );
 };
