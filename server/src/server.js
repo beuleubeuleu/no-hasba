@@ -15,11 +15,11 @@ const getExpensesRouter   = require('./useCases/getExpenses');
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-app.use("/group", createGroupRouter);
-app.use("/group", getAllGroupsRouter);
-app.use("/group", getGroupRouter);
-app.use("/group", createExpenseRouter);
-app.use("/group", getExpensesRouter);
+app.use("/api", createGroupRouter);
+app.use("/api", getAllGroupsRouter);
+app.use("/api", getGroupRouter);
+app.use("/api", createExpenseRouter);
+app.use("/api", getExpensesRouter);
 
 
 app.listen(port, () => {

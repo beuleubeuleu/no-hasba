@@ -3,6 +3,7 @@
   padding       : 1em;
   border-radius : .2rem;
   text-align    : left;
+  background : #ECEFF4;
 }
 
 .trigroup--card__desc {

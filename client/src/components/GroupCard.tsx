@@ -1,19 +1,19 @@
 import React        from "react";
-import TrigroupType from "../types/Trigroup";
+import trigroupType from "../types/trigroup";
 import "./GroupCard.css"
 
 type groupCardProps = {
-  data: TrigroupType
+  data: trigroupType
 }
 const groupCard = ({data}: groupCardProps) => {
   return (
-      <button className="trigroup--card__container">
+      <a href={`/group/${data.id}`} className="trigroup--card__container">
         <li className="trigroup--card">
           <p className="trigroup--card__name">{data.name}</p>
           <br/>
           <p className="trigroup--card__desc">{data.description}</p>
         </li>
-      </button>
+      </a>
   );
 };
 

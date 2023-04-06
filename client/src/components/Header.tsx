@@ -5,7 +5,7 @@ const Header = () => {
 
   return (
       <div className={ "navbar" }>
-        <h1 className="navbar__title">No Hasba</h1>
+        <h1><a className="navbar__title" href={"/"}>no hasba</a></h1>
       </div>
   );
 };

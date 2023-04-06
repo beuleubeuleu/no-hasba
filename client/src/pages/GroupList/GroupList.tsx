@@ -1,27 +1,15 @@
-import React, { useEffect, useState } from "react";
-import GroupCard                      from "../../components/GroupCard"
-import TrigroupType                   from "../../types/Trigroup";
+import React from "react";
+import GroupCard    from "../../components/GroupCard"
+import trigroupType from "../../types/trigroup";
 import "./GroupList.css"
-import { getGroups }                  from "../../api/groups";
+import { useTrigroupContext }         from "../../context/TrigroupContext";
 
 const groupList = () => {
-  const [groups, setGroups] = useState<TrigroupType[]>([])
-
-  const getAllGroups = async() => {
-    const groups = await getGroups()
-    setGroups(groups)
-  }
-
-  useEffect(() => {
-    return () => {
-      getAllGroups()
-    };
-  }, []);
-
+ const {trigroups} = useTrigroupContext()
 
   return (
       <ul className="trigroups--container">
-        { groups.map((group: TrigroupType) => <GroupCard data={ group } key={group.id}/>)}
+        { trigroups.map((group: trigroupType) => <GroupCard data={ group } key={group.id}/>)}
       </ul>
   );
 };

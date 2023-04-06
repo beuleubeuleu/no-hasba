@@ -2,7 +2,7 @@
   line-height              : 1.5;
   font-weight              : 400;
 
-  color                    : #81A1C1;
+  color                    : #5E81AC;
   background               : #1B1F26;
 
   font-synthesis           : none;
@@ -21,15 +21,15 @@
 }
 
 a {
-  color           : #5E81AC;
+  color: inherit;
   text-decoration : inherit;
 }
 
 a:hover {
-  color : #A3BE8C;
+  color : #81A1C1;
 }
-a:visited {
-  color: #B48EAD
+a:active {
+  color: #A3BE8C
 }
 
 body {

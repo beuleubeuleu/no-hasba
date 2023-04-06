@@ -1,7 +1,7 @@
-type TrigroupType = {
+type trigroupType = {
   name: string,
   description: string,
   id: number
 }
 
-export default TrigroupType
+export default trigroupType
