@@ -21,6 +21,7 @@ const Home = () => {
     formData.description = inputDescription?.current?.value || ""
     console.log(formData)
     //Form submission happens here
+
   }
   return (
       <div className="home__container">

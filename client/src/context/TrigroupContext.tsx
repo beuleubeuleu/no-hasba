@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import trigroupType                                              from "../types/trigroup";
+import trigroupType                                              from "../types/trigroupType";
 import { getGroups }                                             from "../api/groups";
 
 type contextProps = {

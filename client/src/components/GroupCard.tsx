@@ -1,5 +1,5 @@
 import React        from "react";
-import trigroupType from "../types/trigroup";
+import trigroupType from "../types/trigroupType";
 import "./GroupCard.css"
 
 type groupCardProps = {
