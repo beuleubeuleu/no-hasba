@@ -3,6 +3,12 @@ const TrigroupSql  = require("./TrigroupSql")
 
 exports.abstractFactory = (tech) => {
   if ( tech === "json" ) return new TrigroupJson
-  if ( tech === "sql" ) return new TrigroupSql({ host: "localhost", database:"tricount_clone" ,port: 8889, user: "root", password: "root" })
+  if ( tech === "sql" ) return new TrigroupSql({
+    host    : process.env.SQL_CONFIG_HOST,
+    database: process.env.SQL_CONFIG_DB,
+    port    : process.env.SQL_CONFIG_PORT,
+    user    : process.env.SQL_CONFIG_USER,
+    password: process.env.SQL_CONFIG_PASSWORD
+  })
   throw new Error("Invalid")
 }

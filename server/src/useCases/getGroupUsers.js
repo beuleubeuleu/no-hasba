@@ -6,7 +6,7 @@ getGroupUsers.get("/:idGroup/users", async(req, res) => {
         const triGroup = abstractFactory(process.env.TRIGROUP_REPOSITORY_INJECTION_TOKEN)
         const users    = await triGroup.getGroupUsers(req.params.idGroup)
 
-        if ( !users ) res.status(404).json({ success: false, message: "error: users not found" })
+        if ( !users ) return res.status(404).json({ success: false, message: "error: users not found" })
         res.status(200).json({ success: true, users })
       } catch ( err ) {
         res.status(500).json({ success: false, message: err.message })
