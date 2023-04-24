@@ -23,10 +23,10 @@ const GroupDetail = () => {
 
   if ( !group ) return null
   return (
-      <div>
+      <>
         { group.name }
         <ExpenseList idGroup={id as string}/>
-      </div>
+      </>
   );
 };
 

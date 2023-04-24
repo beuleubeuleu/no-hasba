@@ -9,20 +9,20 @@
     ],
     "expenses": [
       {
-        "what": "testwhat1",
-        "who_paid": "testname1",
+        "name": "testwhat1",
+        "contributor": "testname1",
         "amount": 10,
-        "for_": [
+        "beneficiaries": [
           "testname1",
           "testname2"
         ],
         "id": 1
       },
       {
-        "what": "testwhat2",
-        "who_paid": "testname2",
+        "name": "testwhat2",
+        "contributor": "testname2",
         "amount": 20,
-        "for_": [
+        "beneficiaries": [
           "testname1",
           "testname2"
         ],
@@ -40,20 +40,20 @@
     ],
     "expenses": [
       {
-        "what": "dinner",
-        "who_paid": "testname2",
+        "name": "dinner",
+        "contributor": "testname2",
         "amount": "20",
-        "for_": [
+        "beneficiaries": [
           "testname2",
           "testname3"
         ],
         "id": 1
       },
       {
-        "what": "breakfast",
-        "who_paid": "testname2",
+        "name": "breakfast",
+        "contributor": "testname2",
         "amount": "27",
-        "for_": [
+        "beneficiaries": [
           "testname2",
           "testname4"
         ],

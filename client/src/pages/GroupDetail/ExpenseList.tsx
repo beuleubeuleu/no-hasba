@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import expenseType                    from "../../types/expenseType";
-import { fetchAllExpense } from "../../api/expense";
+import { fetchAllExpense }            from "../../api/expense";
 
 type expenseListProps = {
-  idGroup:string
+  idGroup: string
 }
-const ExpenseList = ({idGroup}: expenseListProps) => {
+const ExpenseList = ({ idGroup }: expenseListProps) => {
   const [expenses, setExpenses] = useState<expenseType[]>([])
 
-  const getAllExpenses =async (id: string) =>{
+  const getAllExpenses = async (id: string) => {
     const expenses = await fetchAllExpense(id)
     setExpenses(expenses)
   }
@@ -21,9 +21,10 @@ const ExpenseList = ({idGroup}: expenseListProps) => {
 
 
   return (
-      <div>
-        {expenses.map(exp =><li>{exp.name} {exp.description} {exp.amount}</li>)}
-      </div>
+      <ul>
+        { expenses.map(exp => <li
+            key={ exp.id }> { `${ exp.name } ${ exp.contributor } ${ exp.amount } ${ exp.beneficiaries.map(beneficary => beneficary) }` }</li>) }
+      </ul>
   );
 };
 
