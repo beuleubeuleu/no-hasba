@@ -6,7 +6,7 @@ createGroup.post('/create', async(req, res) => {
     await triGroup.createGroup(req.body)
     res.status(201).json({ success: true })
   } catch (err) {
-    res.status(500).json({success: false, message: err})
+    res.status(500).json({success: false, message: err.message})
   }
 
 })

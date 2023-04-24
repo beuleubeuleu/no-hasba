@@ -9,7 +9,7 @@ getGroup.get("/:idGroup", async(req, res) => {
         if (!group) res.status(404).json({ success: false, message: "error: group not found" })
         res.status(200).json({ success: true, group })
       } catch ( err ) {
-        res.status(500).json({ success: false, message: err })
+        res.status(500).json({ success: false, message: err.message })
       }
     }
 )

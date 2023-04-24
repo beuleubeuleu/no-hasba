@@ -7,7 +7,7 @@ createExpense.post("/:idGroup/expenses/create", async(req, res) => {
     await triGroup.createExpense(req.params.idGroup, req.body)
     res.status(201).json({ success: true })
   } catch ( err ) {
-    res.status(500).json({ success: false, message: err })
+    res.status(500).json({ success: false, message: err.message })
   }
 })
 

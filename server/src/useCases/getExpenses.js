@@ -9,7 +9,7 @@ getExpenses.get("/:idGroup/expenses", async(req, res) => {
         if ( !expenses ) res.status(404).json({ success: false, message: "error: group not found" })
         return res.status(200).json({ success: true, expenses })
       } catch ( err ) {
-        res.status(500).json({ success: false, message: err })
+        res.status(500).json({ success: false, message: err.message })
       }
     }
 )

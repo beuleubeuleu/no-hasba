@@ -11,6 +11,7 @@ const getGroupRouter      = require('./useCases/getGroup');
 const getAllGroupsRouter  = require('./useCases/getAllGroups');
 const createExpenseRouter = require('./useCases/createExpense');
 const getExpensesRouter   = require('./useCases/getExpenses');
+const getGroupUsersRouter = require('./useCases/getGroupUsers');
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -20,6 +21,7 @@ app.use("/api", getAllGroupsRouter);
 app.use("/api", getGroupRouter);
 app.use("/api", createExpenseRouter);
 app.use("/api", getExpensesRouter);
+app.use("/api", getGroupUsersRouter);
 
 
 app.listen(port, () => {

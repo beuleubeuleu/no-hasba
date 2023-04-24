@@ -2,24 +2,47 @@ CREATE DATABASE tricount_clone;
 
 USE tricount_clone;
 
-CREATE TABLE trigroup (
-    trigroup_id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    PRIMARY KEY (trigroup_id)
+CREATE TABLE trigroups (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  PRIMARY KEY (id)
 );
 
-CREATE TABLE expense (
-    expense_id INT NOT NULL AUTO_INCREMENT,
-    amount DECIMAL(10,2) NOT NULL,
-    what TEXT,
-    trigroup_id INT NOT NULL,
-    PRIMARY KEY (expense_id),
-    FOREIGN KEY (trigroup_id) REFERENCES trigroup(trigroup_id)
+CREATE TABLE users (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  trigroup_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (trigroup_id) REFERENCES trigroups(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE user (
-    user_id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (user_id)
+CREATE TABLE expenses (
+  id INT NOT NULL AUTO_INCREMENT,
+  name VARCHAR(255) NOT NULL,
+  trigroup_id INT NOT NULL,
+  user_id INT NOT NULL,
+  amount FLOAT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (trigroup_id) REFERENCES trigroups(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE expense_contributors (
+  id INT NOT NULL AUTO_INCREMENT,
+  expense_id INT NOT NULL,
+  user_id INT NOT NULL,
+  amount FLOAT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (expense_id) REFERENCES expenses(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE expense_beneficiaries (
+  id INT NOT NULL AUTO_INCREMENT,
+  expense_id INT NOT NULL,
+  user_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (expense_id) REFERENCES expenses(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

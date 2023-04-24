@@ -7,8 +7,12 @@ class InterfaceTrigroup {
     throw new Error("implement how you want to get expenses")
   }
 
-  createGroup(){
-    throw new Error("implement how you want to create group")
+  getGroupUsers(){
+    throw new Error("implement how you want to get group user")
+  }
+
+  createGroupUser(){
+    throw new Error("implement how you want to create group user")
   }
 
   createExpense(){
