@@ -47,10 +47,23 @@ class TrigroupSql extends InterfaceTrigroup {
   }
 
   async createGroup(body){
-    console.log(body)
     const connection = await mysql.createConnection(this.config);
     try {
-      const [ result ] = await connection.execute('INSERT INTO trigroups (name, description) VALUES (?, ?)', [ body.name, body.description ]);
+      const [ result ] = await connection.execute('INSERT INTO trigroups (name, description) VALUES (?, ?)', [ body.name,
+                                                                                                               body.description ]);
+      console.log(result.insertId)
+    } catch ( err ) {
+      console.log(`oh noo what happened ?, probably ${ err.message }`)
+      return err
+    } finally {
+      await connection.end();
+    }
+  }
+
+  async createGroupUser(body){
+    const connection = await mysql.createConnection(this.config);
+    try {
+      const [ result ] = await connection.execute('INSERT INTO users (name, trigroup_id) VALUES (?, ?)', [ body.name, body.id ]);
       console.log(result.insertId)
     } catch ( err ) {
       console.log(`oh noo what happened ?, probably ${ err.message }`)
