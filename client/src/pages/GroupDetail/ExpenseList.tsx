@@ -22,8 +22,9 @@ const ExpenseList = ({ idGroup }: expenseListProps) => {
 
   return (
       <ul>
-        { expenses.map(exp => <li
-            key={ exp.id }> { `${ exp.name } ${ exp.contributor } ${ exp.amount } ${ exp.beneficiaries.map(beneficary => beneficary) }` }</li>) }
+        { expenses.map(exp =>
+            <li key={ exp.id }> { `${ exp.name } ${ exp.amount } ` }</li>
+        )}
       </ul>
   );
 };
