@@ -14,7 +14,7 @@ class TrigroupSql extends InterfaceTrigroup {
       console.log(rows)
       return rows;
     } catch ( err ) {
-      console.log(`oh noo what happened ?, probably ${ err.message }`)
+      return err
     } finally {
       await connection.end();
     }
@@ -27,7 +27,7 @@ class TrigroupSql extends InterfaceTrigroup {
       console.log(rows)
       return rows[0];
     } catch ( err ) {
-      console.log(`oh noo what happened ?, probably ${ err.message }`)
+      return err
     } finally {
       await connection.end();
     }
@@ -40,7 +40,7 @@ class TrigroupSql extends InterfaceTrigroup {
       console.log(rows)
       return rows;
     } catch ( err ) {
-      console.log(`oh noo what happened ?, probably ${ err.message }`)
+      return err
     } finally {
       await connection.end();
     }
@@ -49,24 +49,33 @@ class TrigroupSql extends InterfaceTrigroup {
   async createGroup(body){
     const connection = await mysql.createConnection(this.config);
     try {
-      const [ result ] = await connection.execute('INSERT INTO trigroups (name, description) VALUES (?, ?)', [ body.name,
-                                                                                                               body.description ]);
-      console.log(result.insertId)
+      const [ result ]       = await connection.execute(
+          'INSERT INTO trigroups (name, description) VALUES (?, ?)',
+          [ body.name, body.description ]
+      );
+      if (!result.affectedRows) return new Error('failed to create group')
+
+      const [ rows, fields ] = await connection.execute('SELECT * from trigroups WHERE ID = ?', [ result.insertId ])
+      return rows[0]
     } catch ( err ) {
-      console.log(`oh noo what happened ?, probably ${ err.message }`)
       return err
     } finally {
       await connection.end();
     }
   }
 
-  async createGroupUser(body){
+  async createGroupUser(name, id){
     const connection = await mysql.createConnection(this.config);
     try {
-      const [ result ] = await connection.execute('INSERT INTO users (name, trigroup_id) VALUES (?, ?)', [ body.name, body.id ]);
-      console.log(result.insertId)
+      const [ result ]       = await connection.execute(
+          'INSERT INTO users (name, trigroup_id) VALUES (?, ?)',
+          [ name, id ]
+      );
+      if (!result.affectedRows) return new Error('failed to create user')
+
+      const [ rows, fields ] = await connection.execute('SELECT * from users WHERE id = ?', [ result.insertId ])
+      return rows[0]
     } catch ( err ) {
-      console.log(`oh noo what happened ?, probably ${ err.message }`)
       return err
     } finally {
       await connection.end();
@@ -80,7 +89,7 @@ class TrigroupSql extends InterfaceTrigroup {
       console.log(rows)
       return rows;
     } catch ( err ) {
-      console.log(`oh noo what happened ?, probably ${ err.message }`)
+      return err
     } finally {
       await connection.end();
     }
