@@ -9,7 +9,9 @@
 }
 
 .navbar__title {
-  font-family : "Tilt Prism", cursive;
+  font-family : "Faster One", cursive;
+  color: #E5E9F0;
+  font-size : 2.5rem;
 }
 
 .navbar__addTable {

@@ -3,6 +3,7 @@ import trigroupType                   from "../../types/trigroupType";
 import { useParams }                  from "react-router-dom";
 import { getOneGroup }                from "../../api/groups";
 import ExpenseList                    from "./ExpenseList";
+import "./groupDetails.css"
 
 const GroupDetail = () => {
   const [group, setGroup] = useState<trigroupType | null>(null)
@@ -23,10 +24,12 @@ const GroupDetail = () => {
 
   if ( !group ) return null
   return (
-      <>
-        { group.name }
-        <ExpenseList idGroup={id as string}/>
-      </>
+      <div className="groupDetails__container">
+        <p className="groupDetails__title">
+          Voici toutes les hasba du trigroup:<span className="groupDetails__span">{ group.name }</span>
+        </p>
+        <ExpenseList idGroup={ id as string }/>
+      </div>
   );
 };
 

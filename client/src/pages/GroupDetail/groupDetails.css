@@ -1,0 +1,14 @@
+.groupDetails__container {
+  margin        : 2em;
+  padding       : 1em 2em;
+  max-width     : 1196px;
+  background    : #2E3440;
+  border-radius : .2em;
+}
+.groupDetails__title {
+  margin-block: 1em;
+  font-size: 1.2rem;
+}
+.groupDetails__span {
+  font-weight : 700;
+}
