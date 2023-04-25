@@ -1,14 +1,11 @@
 const { abstractFactory } = require("../dependency/abstractFactory");
 const createExpense       = require("express").Router();
 
-createExpense.post("/:idGroup/expenses/create", async(req, res) => {
-  try {
+createExpense.post("/:idGroup/expenses", async(req, res) => {
     const triGroup = abstractFactory(process.env.TRIGROUP_REPOSITORY_INJECTION_TOKEN)
-    await triGroup.createExpense(req.params.idGroup, req.body)
+    if (!req.body.name || !req.body.amount || !req.body.contributors || !req.body.beneficiaries) return res.status(400).json({ message: "bad request" })
+    await triGroup.createExpense(req.body, req.params.idGroup)
     res.status(201).json({ success: true })
-  } catch ( err ) {
-    res.status(500).json({ success: false, message: err.message })
-  }
 })
 
 module.exports = createExpense

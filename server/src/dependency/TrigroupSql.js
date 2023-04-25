@@ -64,12 +64,12 @@ class TrigroupSql extends InterfaceTrigroup {
     }
   }
 
-  async createGroupUser(name, id){
+  async createGroupUser(name, idGroup){
     const connection = await mysql.createConnection(this.config);
     try {
       const [ result ]       = await connection.execute(
           'INSERT INTO users (name, trigroup_id) VALUES (?, ?)',
-          [ name, id ]
+          [ name, idGroup ]
       );
       if (!result.affectedRows) return new Error('failed to create user')
 
@@ -91,6 +91,33 @@ class TrigroupSql extends InterfaceTrigroup {
     } catch ( err ) {
       return err
     } finally {
+      await connection.end();
+    }
+  }
+
+  async createExpense(body, id){
+    const connection = await mysql.createConnection(this.config)
+    try {
+      const [result] = await connection.execute(
+          'INSERT INTO expenses (trigroup_id, name, amount) VALUES (?, ?, ?)',
+          [id, body.name, body.amount]
+      )
+      for ( const contributor of body.contributors ) {
+        await connection.execute(
+            'INSERT INTO expense_contributors (expense_id, user_id, amount) VALUES (?, ?, ?)',
+            [result.insertId, contributor.id, contributor.amount]
+        )
+      }
+      for ( const beneficiary of body.beneficiaries ) {
+        await connection.execute(
+            'INSERT INTO expense_beneficiaries (expense_id, user_id) VALUES (?, ?)',
+            [result.insertId, beneficiary.id]
+        )
+      }
+    } catch ( err ) {
+      console.log(err)
+      return err
+    }finally {
       await connection.end();
     }
   }
