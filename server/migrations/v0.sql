@@ -11,21 +11,19 @@ CREATE TABLE trigroups (
 
 CREATE TABLE users (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
   trigroup_id INT NOT NULL,
+  name VARCHAR(255) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (trigroup_id) REFERENCES trigroups(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE expenses (
   id INT NOT NULL AUTO_INCREMENT,
-  name VARCHAR(255) NOT NULL,
   trigroup_id INT NOT NULL,
-  user_id INT NOT NULL,
-  amount FLOAT NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  total_amount FLOAT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (trigroup_id) REFERENCES trigroups(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE expense_contributors (
