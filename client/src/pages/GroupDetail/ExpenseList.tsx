@@ -11,8 +11,9 @@ const ExpenseList = ({ idGroup }: expenseListProps) => {
 
   const getAllExpenses = async (id: string) => {
     const expenses = await fetchAllExpense(id)
-    setExpenses(expenses)
+    setExpenses(() => expenses)
   }
+
 
   useEffect(() => {
     return () => {
@@ -30,7 +31,7 @@ const ExpenseList = ({ idGroup }: expenseListProps) => {
           <div className="col col-4">Beneficiaires</div>
         </li>
         { expenses.map(exp =>
-            <li className="table-row" key={exp.id}>
+            <li className="table-row" key={ exp.id }>
               <div className="col col-1" data-label="Name">{ exp.name }</div>
               <div className="col col-2" data-label="Amount">{ exp.amount }€</div>
               <div className="col col-3" data-label="Contributors">To Do</div>
