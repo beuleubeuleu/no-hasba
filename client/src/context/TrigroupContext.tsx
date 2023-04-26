@@ -1,3 +1,4 @@
+/*
 import React, { createContext, useContext, useEffect, useState } from "react";
 import trigroupType                                              from "../types/trigroupType";
 import { getGroups }                                             from "../api/groups";
@@ -36,3 +37,4 @@ const TrigroupContextProvider = ({ children }: contextProps) => {
 };
 
 export default TrigroupContextProvider;
+*/

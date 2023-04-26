@@ -26,7 +26,7 @@ const GroupDetail = () => {
   return (
       <div className="groupDetails__container">
         <p className="groupDetails__title">
-          Voici toutes les hasba du trigroup:<span className="groupDetails__span">{ group.name }</span>
+          Voici toutes les hasba du groupe:<span className="groupDetails__span">{ group.name }</span>
         </p>
         <ExpenseList idGroup={ id as string }/>
       </div>

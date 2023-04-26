@@ -2,13 +2,14 @@
   margin        : 2em;
   padding       : 1em 2em;
   max-width     : 1196px;
-  background    : #ECEFF4;
+  background    : #2E3440;
   border-radius : .2em;
 }
 
 .home__title {
-  margin: 1em 1em 2em 1em;
+  margin: 1em 1em 1.2em 1em;
   font-size : clamp(1rem,3vw,2rem);
+  color     : #ECEFF4;
 }
 
 input[type="text"]{
@@ -65,7 +66,7 @@ input:focus ~ label, input:valid ~ label {
   top       : -1.5rem;
   font-size : 1rem;
   font-weight : 700;
-  color     : #5E81AC;
+  color     : #ECEFF4;
 }
 
 /* BOTTOM BARS ================================= */

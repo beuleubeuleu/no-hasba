@@ -1,30 +1,20 @@
 import React                                   from "react";
 import Header                                  from "./components/Header"
-import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import TrigroupContextProvider                 from "./context/TrigroupContext";
-import GroupDetail from "./pages/GroupDetail/GroupDetail";
-import Home        from "./pages/Home/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import GroupDetail                             from "./pages/GroupDetail/GroupDetail";
+import Home                                    from "./pages/Home/Home";
 
 const App = () => {
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Home/>
-    },
-    {
-      path: "/group/:id",
-      element: <GroupDetail/>
-    }
-  ]);
-
-
   return (
       <div>
+        <BrowserRouter>
         <Header/>
-        <TrigroupContextProvider>
-          <RouterProvider router={ router }/>
-        </TrigroupContextProvider>
+          <Routes>
+            <Route element={<Home/>} path={"/"}/>
+            <Route element={<GroupDetail/>} path={"/group/:id"}/>
+          </Routes>
+        </BrowserRouter>
       </div>
   );
 };
