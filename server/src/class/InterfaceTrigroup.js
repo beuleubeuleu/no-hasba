@@ -18,5 +18,9 @@ class InterfaceTrigroup {
   createExpense(){
     throw new Error("implement how you want to create expense")
   }
+
+  getGroupTotalDebt(){
+    throw new Error("implement how you want to get group total debt")
+  }
 }
 module.exports = InterfaceTrigroup

@@ -49,11 +49,11 @@ class TrigroupSql extends InterfaceTrigroup {
   async createGroup(body){
     const connection = await mysql.createConnection(this.config);
     try {
-      const [ result ]       = await connection.execute(
+      const [ result ] = await connection.execute(
           'INSERT INTO trigroups (name, description) VALUES (?, ?)',
           [ body.name, body.description ]
       );
-      if (!result.affectedRows) return new Error('failed to create group')
+      if ( !result.affectedRows ) return new Error('failed to create group')
 
       const [ rows, fields ] = await connection.execute('SELECT * from trigroups WHERE ID = ?', [ result.insertId ])
       return rows[0]
@@ -67,11 +67,11 @@ class TrigroupSql extends InterfaceTrigroup {
   async createGroupUser(name, idGroup){
     const connection = await mysql.createConnection(this.config);
     try {
-      const [ result ]       = await connection.execute(
+      const [ result ] = await connection.execute(
           'INSERT INTO users (name, trigroup_id) VALUES (?, ?)',
           [ name, idGroup ]
       );
-      if (!result.affectedRows) return new Error('failed to create user')
+      if ( !result.affectedRows ) return new Error('failed to create user')
 
       const [ rows, fields ] = await connection.execute('SELECT * from users WHERE id = ?', [ result.insertId ])
       return rows[0]
@@ -98,26 +98,54 @@ class TrigroupSql extends InterfaceTrigroup {
   async createExpense(body, id){
     const connection = await mysql.createConnection(this.config)
     try {
-      const [result] = await connection.execute(
+      const [ result ] = await connection.execute(
           'INSERT INTO expenses (trigroup_id, name, amount) VALUES (?, ?, ?)',
-          [id, body.name, body.amount]
+          [ id, body.name, body.amount ]
       )
       for ( const contributor of body.contributors ) {
         await connection.execute(
             'INSERT INTO expense_contributors (expense_id, user_id, amount) VALUES (?, ?, ?)',
-            [result.insertId, contributor.id, contributor.amount]
+            [ result.insertId, contributor.id, contributor.amount ]
         )
       }
       for ( const beneficiary of body.beneficiaries ) {
         await connection.execute(
             'INSERT INTO expense_beneficiaries (expense_id, user_id) VALUES (?, ?)',
-            [result.insertId, beneficiary.id]
+            [ result.insertId, beneficiary.id ]
         )
       }
     } catch ( err ) {
       console.log(err)
       return err
-    }finally {
+    } finally {
+      await connection.end();
+    }
+  }
+
+  async getGroupTotalDebt(idGroup){
+    // first step, get the total debt of one expense when there is only one contributor per expense
+    const connection = await mysql.createConnection(this.config);
+    try {
+      const [ expenses ]      = await connection.execute('SELECT * FROM expenses WHERE trigroup_id = ?', [ idGroup ]);
+      const expense                   = expenses[0]
+      const [ contributors ]  = await connection.execute('SELECT * FROM expense_contributors WHERE expense_id = ?', [ expense.id ]);
+      const [ beneficiaries ] = await connection.execute('SELECT * FROM expense_beneficiaries WHERE expense_id = ?', [ expense.id ]);
+
+      const contributor               = contributors[0]
+      const totalAmount               = expense.amount
+      const listOfBeneficiariesUserId = [ ...beneficiaries ].map((user => user.user_id))
+      const beneficiariesDebt         = (totalAmount / listOfBeneficiariesUserId.length).toFixed(2)
+      return listOfBeneficiariesUserId.map((beneficiary) => {
+        return {
+          theOneWhoOwes  : beneficiary,
+          theOneWhoIsOwed: contributor.user_id,
+          amount         : beneficiariesDebt
+        }
+      })
+    } catch ( err ) {
+      console.log(err)
+      return err
+    } finally {
       await connection.end();
     }
   }
