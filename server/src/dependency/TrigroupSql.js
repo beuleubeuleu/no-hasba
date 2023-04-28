@@ -123,33 +123,55 @@ class TrigroupSql extends InterfaceTrigroup {
   }
 
   async getGroupTotalDebt(idGroup) {
-    // first step, get the total debt of one expense when there is only one contributor per expense
-    // 2nd step, get the total debt of all expenses when there is only one contributor per expense
     const connection = await mysql.createConnection(this.config);
+
     try {
       const [expenses] = await connection.execute('SELECT * FROM expenses WHERE trigroup_id = ?', [idGroup]);
 
-      const allDebts = [];
-      for (const expense of expenses) {
+      const debts = await Promise.all(expenses.map(async (expense) => {
         const [contributors] = await connection.execute('SELECT * FROM expense_contributors WHERE expense_id = ?', [expense.id]);
         const [beneficiaries] = await connection.execute('SELECT * FROM expense_beneficiaries WHERE expense_id = ?', [expense.id]);
 
         const contributor = contributors[0];
-        const totalAmount = expense.amount;
-        const listOfBeneficiariesUserId = [...beneficiaries].map((user) => user.user_id);
-        const beneficiariesDebt = (totalAmount / listOfBeneficiariesUserId.length).toFixed(2);
+        const beneficiariesDebt = (expense.amount / beneficiaries.length).toFixed(2);
 
-        const debtsForExpense = listOfBeneficiariesUserId.map((beneficiary) => ({
-          theOneWhoOwes: beneficiary,
-          theOneWhoIsOwed: contributor.user_id,
-          amount: beneficiariesDebt,
-          forExpense: expense.id,
+        return await Promise.all(beneficiaries.map(async (beneficiary) => {
+          let [theOneWhoIsOwed] = await connection.execute('SELECT name FROM users WHERE id = ?', [contributor.user_id]);
+          let [theOneWhoOwes] = await connection.execute('SELECT name FROM users WHERE id = ?', [beneficiary.user_id]);
+          return {
+            borrower: theOneWhoOwes[0].name,
+            lender: theOneWhoIsOwed[0].name,
+            amount: beneficiariesDebt,
+          };
         }));
+      }));
 
-        allDebts.push(...debtsForExpense);
-      }
+      // Flatten the array of arrays into a single array of objects
+      const flattenedDebts = debts.flat();
 
-      return allDebts;
+      // Create an object to store the debts for each user
+      const userDebts = {};
+
+      // Calculate the total debt owed to or by each user
+      flattenedDebts.forEach((debt) => {
+        if (!(debt.borrower in userDebts)) {
+          userDebts[debt.borrower] = 0;
+        }
+        if (!(debt.lender in userDebts)) {
+          userDebts[debt.lender] = 0;
+        }
+        userDebts[debt.borrower] -= Number(debt.amount);
+        userDebts[debt.lender] += Number(debt.amount);
+      });
+
+      // Convert the userDebts object into an array of objects
+      const userList = Object.keys(userDebts).map((user) => ({
+        user,
+        debt: userDebts[user].toFixed(2),
+      }));
+
+      // Return the user list sorted by debt amount
+      return userList.sort((a, b) => a.debt - b.debt);
     } catch (err) {
       console.log(err);
       return err;
@@ -157,6 +179,7 @@ class TrigroupSql extends InterfaceTrigroup {
       await connection.end();
     }
   }
+
 
 }
 
