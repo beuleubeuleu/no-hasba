@@ -12,6 +12,7 @@ const getAllGroupsRouter      = require('./useCases/getAllGroups');
 const createExpenseRouter     = require('./useCases/createExpense');
 const getExpensesRouter       = require('./useCases/getExpenses');
 const getGroupUsersRouter     = require('./useCases/getGroupUsers');
+const getUserRouter     = require('./useCases/getUserFromId');
 const createGroupUserRouter   = require('./useCases/createGroupUser');
 const getGroupTotalDebtRouter = require('./useCases/getGroupTotalDebt');
 
@@ -24,6 +25,7 @@ app.use("/api", getGroupRouter);
 app.use("/api", createExpenseRouter);
 app.use("/api", getExpensesRouter);
 app.use("/api", getGroupUsersRouter);
+app.use("/api", getUserRouter);
 app.use("/api", createGroupUserRouter);
 app.use("/api", getGroupTotalDebtRouter);
 

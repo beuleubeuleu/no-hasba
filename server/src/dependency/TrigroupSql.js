@@ -95,6 +95,19 @@ class TrigroupSql extends InterfaceTrigroup {
     }
   }
 
+  async getUserFromId(idUser){
+    const connection = await mysql.createConnection(this.config);
+    try {
+      const [ rows, fields ] = await connection.execute('SELECT * FROM users WHERE id = ?', [ idUser])
+      console.log("yo", idUser)
+      return rows[0];
+    } catch ( err ) {
+      return err
+    } finally {
+      await connection.end();
+    }
+  }
+
   async createExpense(body, id){
     const connection = await mysql.createConnection(this.config)
     try {

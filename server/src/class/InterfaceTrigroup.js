@@ -11,6 +11,10 @@ class InterfaceTrigroup {
     throw new Error("implement how you want to get group user")
   }
 
+  getUserFromId(){
+    throw new Error("implement how you want to get user")
+  }
+
   createGroupUser(){
     throw new Error("implement how you want to create group user")
   }
