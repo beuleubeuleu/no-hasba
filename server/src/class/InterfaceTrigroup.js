@@ -11,6 +11,10 @@ class InterfaceTrigroup {
     throw new Error("implement how you want to get contributors")
   }
 
+  getBeneficiariesOfExpense(){
+    throw new Error("implement how you want to get beneficiaries")
+  }
+
   getGroupUsers(){
     throw new Error("implement how you want to get group user")
   }
