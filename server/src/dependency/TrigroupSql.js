@@ -122,33 +122,42 @@ class TrigroupSql extends InterfaceTrigroup {
     }
   }
 
-  async getGroupTotalDebt(idGroup){
+  async getGroupTotalDebt(idGroup) {
     // first step, get the total debt of one expense when there is only one contributor per expense
+    // 2nd step, get the total debt of all expenses when there is only one contributor per expense
     const connection = await mysql.createConnection(this.config);
     try {
-      const [ expenses ]      = await connection.execute('SELECT * FROM expenses WHERE trigroup_id = ?', [ idGroup ]);
-      const expense                   = expenses[0]
-      const [ contributors ]  = await connection.execute('SELECT * FROM expense_contributors WHERE expense_id = ?', [ expense.id ]);
-      const [ beneficiaries ] = await connection.execute('SELECT * FROM expense_beneficiaries WHERE expense_id = ?', [ expense.id ]);
+      const [expenses] = await connection.execute('SELECT * FROM expenses WHERE trigroup_id = ?', [idGroup]);
 
-      const contributor               = contributors[0]
-      const totalAmount               = expense.amount
-      const listOfBeneficiariesUserId = [ ...beneficiaries ].map((user => user.user_id))
-      const beneficiariesDebt         = (totalAmount / listOfBeneficiariesUserId.length).toFixed(2)
-      return listOfBeneficiariesUserId.map((beneficiary) => {
-        return {
-          theOneWhoOwes  : beneficiary,
+      const allDebts = [];
+      for (const expense of expenses) {
+        const [contributors] = await connection.execute('SELECT * FROM expense_contributors WHERE expense_id = ?', [expense.id]);
+        const [beneficiaries] = await connection.execute('SELECT * FROM expense_beneficiaries WHERE expense_id = ?', [expense.id]);
+
+        const contributor = contributors[0];
+        const totalAmount = expense.amount;
+        const listOfBeneficiariesUserId = [...beneficiaries].map((user) => user.user_id);
+        const beneficiariesDebt = (totalAmount / listOfBeneficiariesUserId.length).toFixed(2);
+
+        const debtsForExpense = listOfBeneficiariesUserId.map((beneficiary) => ({
+          theOneWhoOwes: beneficiary,
           theOneWhoIsOwed: contributor.user_id,
-          amount         : beneficiariesDebt
-        }
-      })
-    } catch ( err ) {
-      console.log(err)
-      return err
+          amount: beneficiariesDebt,
+          forExpense: expense.id,
+        }));
+
+        allDebts.push(...debtsForExpense);
+      }
+
+      return allDebts;
+    } catch (err) {
+      console.log(err);
+      return err;
     } finally {
       await connection.end();
     }
   }
+
 }
 
 module.exports = TrigroupSql
