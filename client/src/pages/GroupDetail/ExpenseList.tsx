@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
+import Expense from "../../components/Expense"
 import expenseType                    from "../../types/expenseType";
 import { fetchAllExpense }            from "../../api/expense";
 import "./ExpenseList.css"
+import userType                       from "../../types/userType";
+import UserType                       from "../../types/userType";
 
 type expenseListProps = {
-  idGroup: string
+  idGroup: string,
+  usersDict: {[id: number]: UserType}
 }
-const ExpenseList = ({ idGroup }: expenseListProps) => {
+const ExpenseList = ({ idGroup, usersDict }: expenseListProps) => {
   const [expenses, setExpenses] = useState<expenseType[]>([])
-
   const getAllExpenses = async (id: string) => {
     const expenses = await fetchAllExpense(id)
     setExpenses(() => expenses)
   }
-
 
   useEffect(() => {
     return () => {
@@ -30,14 +32,7 @@ const ExpenseList = ({ idGroup }: expenseListProps) => {
           <div className="col col-3">S'est fait Hasba</div>
           <div className="col col-4">Beneficiaires</div>
         </li>
-        { expenses.map(exp =>
-            <li className="table-row" key={ exp.id }>
-              <div className="col col-1" data-label="Name">{ exp.name }</div>
-              <div className="col col-2" data-label="Amount">{ exp.amount }€</div>
-              <div className="col col-3" data-label="Contributors">To Do</div>
-              <div className="col col-4" data-label="Beneficiaries">To Do</div>
-            </li>
-        ) }
+        { expenses.map(exp => <Expense key={exp.id} exp={exp} usersDict={usersDict}/> ) }
       </ul>
   );
 };

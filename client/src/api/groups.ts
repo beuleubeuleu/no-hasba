@@ -8,7 +8,7 @@ export const getGroups = () => {
   }
 }
 
-export const getOneGroup = (id:string) => {
+export const fetchOneGroup = (id:string) => {
   try {
     return axios.get(`/api/${id}`).then((response) => response.data.group)
   } catch (err) {
