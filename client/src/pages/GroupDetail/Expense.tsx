@@ -1,7 +1,7 @@
 import React, { useEffect, useState }                                      from "react";
-import ExpenseType                                                         from "../types/expenseType";
-import { fetchBeneficiariesFromExpenseId, fetchContributorsFromExpenseId } from "../api/users";
-import userType                                                            from "../types/userType";
+import ExpenseType                                                         from "../../types/expenseType";
+import { fetchBeneficiariesFromExpenseId, fetchContributorsFromExpenseId } from "../../api/users";
+import userType                                                            from "../../types/userType";
 
 type expenseProps = {
   exp: ExpenseType,

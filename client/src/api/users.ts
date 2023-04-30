@@ -8,13 +8,6 @@ export const fetchGroupUsers = (idgroup:string) => {
   }
 }
 
-export const fetchUserFromId = (idUser:number) => {
-  try {
-    return axios.get(`/api/users/${idUser}}`).then((response) => response.data.user)
-  } catch (err) {
-    console.error(err)
-  }
-}
 export const fetchContributorsFromExpenseId = (idExpense:number) => {
   try {
     return axios.get(`/api/expenses/contributors/${idExpense}}`).then((response) => response.data.contributors)

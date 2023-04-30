@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Expense from "../../components/Expense"
+import Expense                        from "./Expense"
 import expenseType                    from "../../types/expenseType";
 import { fetchAllExpense }            from "../../api/expense";
 import "./ExpenseList.css"
