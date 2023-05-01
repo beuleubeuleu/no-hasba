@@ -15,3 +15,11 @@ export const createGroup = (body:{name: string, username: string, description: s
     console.error(err)
   }
 }
+
+export const fetchTotalGroupDebt = (id: string) => {
+  try {
+    return axios.get(`/api/${id}/debt`).then((response) => response.data.groupTotalDebt)
+  } catch (err) {
+    console.error(err)
+  }
+}

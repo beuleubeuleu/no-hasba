@@ -3,12 +3,11 @@ import Expense                        from "./Expense"
 import expenseType                    from "../../types/expenseType";
 import { fetchAllExpense }            from "../../api/expense";
 import "./ExpenseList.css"
-import userType                       from "../../types/userType";
 import UserType                       from "../../types/userType";
 
 type expenseListProps = {
   idGroup: string,
-  usersDict: {[id: number]: UserType}
+  usersDict: { [id: number]: UserType }
 }
 const ExpenseList = ({ idGroup, usersDict }: expenseListProps) => {
   const [expenses, setExpenses] = useState<expenseType[]>([])
@@ -21,7 +20,7 @@ const ExpenseList = ({ idGroup, usersDict }: expenseListProps) => {
     return () => {
       getAllExpenses(idGroup)
     };
-  }, []);
+  }, [idGroup]);
 
 
   return (
@@ -32,7 +31,7 @@ const ExpenseList = ({ idGroup, usersDict }: expenseListProps) => {
           <div className="col col-3">S'est fait Hasba</div>
           <div className="col col-4">Beneficiaires</div>
         </li>
-        { expenses.map(exp => <Expense key={exp.id} exp={exp} usersDict={usersDict}/> ) }
+        { expenses.map(exp => <Expense key={ exp.id } exp={ exp } usersDict={ usersDict }/>) }
       </ul>
   );
 };

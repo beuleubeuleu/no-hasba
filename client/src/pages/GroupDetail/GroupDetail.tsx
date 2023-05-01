@@ -7,10 +7,12 @@ import "./groupDetails.css"
 import { fetchGroupUsers }            from "../../api/users";
 import userType                       from "../../types/userType";
 import UserType                       from "../../types/userType";
+import { Balance }                    from "./Balance";
 
 const GroupDetail = () => {
   const [group, setGroup] = useState<trigroupType | null>(null)
   const [users, setUsers] = useState<userType[]>([]);
+  const [isExpense, setIsExpense] = useState(true);
 
   let { id } = useParams()
 
@@ -47,8 +49,11 @@ const GroupDetail = () => {
             users.map((user, index) => `${ user.name }${ index < users.length - 1? ", ": "" }`): "No users" }
         </span>
 
+          <input type="checkbox" name={"isExpense"} onChange={()=>{setIsExpense(!isExpense)}} />
+
         </p>
-        <ExpenseList idGroup={ id as string } usersDict={ usersDict }/>
+        { isExpense && <ExpenseList idGroup={ id as string } usersDict={ usersDict }/> }
+        { !isExpense && <Balance idGroup={ id as string } usersDict={ usersDict }/> }
       </div>
   );
 };

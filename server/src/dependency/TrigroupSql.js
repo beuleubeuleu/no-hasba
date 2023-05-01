@@ -195,8 +195,8 @@ class TrigroupSql extends InterfaceTrigroup {
         if (!(debt.lender in userDebts)) {
           userDebts[debt.lender] = 0;
         }
-        userDebts[debt.borrower] -= Number(debt.amount);
-        userDebts[debt.lender] += Number(debt.amount);
+        userDebts[debt.borrower] += Number(debt.amount);
+        userDebts[debt.lender] -= Number(debt.amount);
       });
 
       // Convert the userDebts object into an array of objects
