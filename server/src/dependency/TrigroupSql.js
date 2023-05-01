@@ -173,11 +173,9 @@ class TrigroupSql extends InterfaceTrigroup {
         const beneficiariesDebt = (expense.amount / beneficiaries.length).toFixed(2);
 
         return await Promise.all(beneficiaries.map(async (beneficiary) => {
-          let [theOneWhoIsOwed] = await connection.execute('SELECT name FROM users WHERE id = ?', [contributor.user_id]);
-          let [theOneWhoOwes] = await connection.execute('SELECT name FROM users WHERE id = ?', [beneficiary.user_id]);
           return {
-            borrower: theOneWhoOwes[0].name,
-            lender: theOneWhoIsOwed[0].name,
+            borrower: beneficiary.user_id,
+            lender: contributor.user_id,
             amount: beneficiariesDebt,
           };
         }));
