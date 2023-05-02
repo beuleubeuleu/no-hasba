@@ -205,8 +205,29 @@ class TrigroupSql extends InterfaceTrigroup {
         debt: userDebts[user].toFixed(2),
       }));
 
+      // Calculate the list of payments to be made between users
+      const paymentList = [];
+      for (let i = 0; i < userList.length; i++) {
+        let user1Debt = userList[i].debt
+        for (let j = i + 1; j < userList.length; j++) {
+        let user2Debt = userList[j].debt
+          const user1 = userList[i];
+          const user2 = userList[j];
+          if (user1.debt > 0 && user2.debt < 0) {
+            const paymentAmount = Math.min(user1Debt, -user2Debt);
+            paymentList.push({
+              from: user1.user,
+              to: user2.user,
+              amount: paymentAmount.toFixed(2),
+            });
+            user1Debt -= paymentAmount;
+            user2Debt += paymentAmount;
+          }
+        }
+      }
+
       // Return the user list sorted by debt amount
-      return userList.sort((a, b) => a.debt - b.debt);
+      return { usersDebt: userList.sort((a, b) => a.debt - b.debt), howToBalance: paymentList };
     } catch (err) {
       console.log(err);
       return err;
