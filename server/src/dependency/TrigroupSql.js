@@ -122,7 +122,7 @@ class TrigroupSql extends InterfaceTrigroup {
   async getUserFromId(idUser){
     const connection = await mysql.createConnection(this.config);
     try {
-      const [ rows, fields ] = await connection.execute('SELECT * FROM users WHERE id = ?', [ idUser])
+      const [ rows, fields ] = await connection.execute('SELECT * FROM users WHERE id = ?', [ idUser ])
       console.log("yo", idUser)
       return rows[0];
     } catch ( err ) {
@@ -159,26 +159,26 @@ class TrigroupSql extends InterfaceTrigroup {
     }
   }
 
-  async getGroupTotalDebt(idGroup) {
+  async getGroupTotalDebt(idGroup){
     const connection = await mysql.createConnection(this.config);
 
     try {
-      const [expenses] = await connection.execute('SELECT * FROM expenses WHERE trigroup_id = ?', [idGroup]);
+      const [ expenses ] = await connection.execute('SELECT * FROM expenses WHERE trigroup_id = ?', [ idGroup ]);
 
-      const debts = await Promise.all(expenses.map(async (expense) => {
-        const [contributors] = await connection.execute('SELECT * FROM expense_contributors WHERE expense_id = ?', [expense.id]);
-        const [beneficiaries] = await connection.execute('SELECT * FROM expense_beneficiaries WHERE expense_id = ?', [expense.id]);
+      const debts = await Promise.all(expenses.map(async(expense) => {
+        const [ contributors ]  = await connection.execute('SELECT * FROM expense_contributors WHERE expense_id = ?', [ expense.id ]);
+        const [ beneficiaries ] = await connection.execute('SELECT * FROM expense_beneficiaries WHERE expense_id = ?', [ expense.id ]);
 
-        const contributor = contributors[0];
+        const contributor       = contributors[0];
         const beneficiariesDebt = (expense.amount / beneficiaries.length).toFixed(2);
 
-        return await Promise.all(beneficiaries.map(async (beneficiary) => {
+        return beneficiaries.map(beneficiary => {
           return {
             borrower: beneficiary.user_id,
-            lender: contributor.user_id,
-            amount: beneficiariesDebt,
+            lender  : contributor.user_id,
+            amount  : beneficiariesDebt,
           };
-        }));
+        });
       }));
 
       // Flatten the array of arrays into a single array of objects
@@ -189,10 +189,10 @@ class TrigroupSql extends InterfaceTrigroup {
 
       // Calculate the total debt owed to or by each user
       flattenedDebts.forEach((debt) => {
-        if (!(debt.borrower in userDebts)) {
+        if ( !(debt.borrower in userDebts) ) {
           userDebts[debt.borrower] = 0;
         }
-        if (!(debt.lender in userDebts)) {
+        if ( !(debt.lender in userDebts) ) {
           userDebts[debt.lender] = 0;
         }
         userDebts[debt.borrower] += Number(debt.amount);
@@ -207,17 +207,17 @@ class TrigroupSql extends InterfaceTrigroup {
 
       // Calculate the list of payments to be made between users
       const paymentList = [];
-      for (let i = 0; i < userList.length; i++) {
+      for ( let i = 0; i < userList.length; i++ ) {
         let user1Debt = userList[i].debt
-        for (let j = i + 1; j < userList.length; j++) {
-        let user2Debt = userList[j].debt
-          const user1 = userList[i];
-          const user2 = userList[j];
-          if (user1.debt > 0 && user2.debt < 0) {
+        for ( let j = i + 1; j < userList.length; j++ ) {
+          let user2Debt = userList[j].debt
+          const user1   = userList[i];
+          const user2   = userList[j];
+          if ( user1.debt > 0 && user2.debt < 0 ) {
             const paymentAmount = Math.min(user1Debt, -user2Debt);
             paymentList.push({
-              from: user1.user,
-              to: user2.user,
+              from  : user1.user,
+              to    : user2.user,
               amount: paymentAmount.toFixed(2),
             });
             user1Debt -= paymentAmount;
@@ -228,7 +228,7 @@ class TrigroupSql extends InterfaceTrigroup {
 
       // Return the user list sorted by debt amount
       return { usersDebt: userList.sort((a, b) => a.debt - b.debt), howToBalance: paymentList };
-    } catch (err) {
+    } catch ( err ) {
       console.log(err);
       return err;
     } finally {

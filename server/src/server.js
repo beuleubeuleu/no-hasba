@@ -6,7 +6,7 @@ require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 
 const port                    = process.env.PORT || 4000
-const createGroupRouter       = require('./useCases/createGroup');
+const createGroupRouter       = require('./useCases/initGroup');
 const getGroupRouter          = require('./useCases/getGroup');
 const getAllGroupsRouter      = require('./useCases/getAllGroups');
 const createExpenseRouter     = require('./useCases/createExpense');
