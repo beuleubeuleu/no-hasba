@@ -1,19 +1,33 @@
-import { initGroup } from "../useCases/initGroup";
+const { initGroup } = require("../useCases/initGroup");
 
-export const initializeGroup = async(req, res) => {
-  if ( !(req.body.name && req.body.description && req.body.username) ) {
-    res.status(400).json({
-      success: false,
-      message: "Bad Request"
-    })
-  }
+exports.initializeGroup = async (req, res) => {
   try {
-    const [ group, firstUser ] = await initGroup(req.body)
+    const { name, description, username } = req.body;
+    if (!name || !description || !username) {
+      return res.status(400).json({
+        success: false,
+        message: "Bad Request",
+      });
+    }
+
+    const [group, firstUser] = await initGroup(req.body);
+    if (!group || !firstUser) {
+      return res.status(500).json({
+        success: false,
+        message: "Failed to initialize group.",
+      });
+    }
+
     res.status(201).json({
       success: true,
       group,
-      firstUser })
-  } catch ( err ) {
-
+      firstUser,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
-}
+};

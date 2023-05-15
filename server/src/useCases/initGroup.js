@@ -1,8 +1,8 @@
 const { abstractFactory } = require("../dependency/abstractFactory");
 
-export const initGroup = async(body) => {
+exports.initGroup = async(body) => {
   const Trigroup = abstractFactory(process.env.TRIGROUP_REPOSITORY_INJECTION_TOKEN)
   const group = await Trigroup.createGroup(body)
   const firstUser = await Trigroup.createGroupUser(body.username, group.id)
-  return {group, firstUser}
+  return [group, firstUser]
 }
